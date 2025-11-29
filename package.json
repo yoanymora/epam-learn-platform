@@ -1,0 +1,27 @@
+{
+  "name": "epam-learn-platform",
+  "version": "1.0.0",
+  "description": "Automation testing exercise with Cypress to take a look at the EPAM's Learn platform",
+  "main": "cypress.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yoanymora/epam-learn-platform.git"
+  },
+  "author": "Yoany Mora",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yoanymora/epam-learn-platform/issues"
+  },
+  "homepage": "https://github.com/yoanymora/epam-learn-platform#readme",
+  "devDependencies": {
+    "@eslint/js": "^9.39.1",
+    "cypress": "^15.7.0",
+    "eslint": "^9.39.1",
+    "jiti": "^2.6.1",
+    "prettier": "3.7.1",
+    "typescript": "^5.9.3"
+  }
+}
