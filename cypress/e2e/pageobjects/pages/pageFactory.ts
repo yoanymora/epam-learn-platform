@@ -4,7 +4,7 @@ export default class PageFactory {
 		this.url = url;
 	}
 
-	open(): void {
+	visit(): void {
 		cy.visit(this.url);
 	}
 }
