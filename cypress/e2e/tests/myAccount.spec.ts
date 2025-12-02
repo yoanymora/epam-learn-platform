@@ -2,7 +2,9 @@ import MyAccountPage from "../pageobjects/pages/myAccountPage";
 import MyAccountService from "../pageobjects/services/myAccountService";
 
 describe("My Account", () => {
-	beforeEach(() => {
+	before(() => {
+		Cypress.session.clearAllSavedSessions();
+		cy.reload(true);
 		cy.logInWithDiscord();
 	});
 

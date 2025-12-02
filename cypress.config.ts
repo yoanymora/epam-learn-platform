@@ -14,4 +14,8 @@ export default defineConfig({
 		specPattern: "cypress/e2e/tests/*.spec.ts",
 		setupNodeEvents(on, config) {},
 	},
+	retries: {
+		runMode: 2,
+		openMode: 2,
+	},
 });

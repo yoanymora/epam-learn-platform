@@ -5,21 +5,6 @@ Cypress.on("uncaught:exception", (err, runnable) => {
 	return false;
 });
 
-Cypress.Commands.add("logInWithLinkedIn", () => {
-	cy.session("linkedInSession", () => {
-		Login.visit();
-		Access.showMoreLink.should("be.visible");
-		Access.showMoreLink.click();
-		Access.logWithLinkedInButton.should("be.visible");
-		Access.logWithLinkedInButton.click();
-		cy.origin("https://www.linkedin.com", () => {
-			cy.get("#username").type(Cypress.env("linkedInUserEmail"));
-			cy.get("#password").type(Cypress.env("linkedInUserPassword"));
-			cy.get('button[type="submit"]').click();
-		});
-	});
-});
-
 Cypress.Commands.add("logInWithDiscord", () => {
 	cy.session("discordSession", () => {
 		Login.visit();
@@ -30,7 +15,6 @@ Cypress.Commands.add("logInWithDiscord", () => {
 			Cypress.on("uncaught:exception", (err, runnable) => {
 				return false;
 			});
-			cy.wait(2000);
 			cy.get('input[name="email"]')
 				.should("be.visible")
 				.type(Cypress.env("DiscordUserEmail"));
