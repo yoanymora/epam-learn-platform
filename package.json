@@ -14,6 +14,7 @@
 	},
 	"homepage": "https://github.com/yoanymora/epam-learn-platform#readme",
 	"devDependencies": {
+		"@cypress/grep": "^5.0.0",
 		"@eslint/js": "^9.39.1",
 		"cypress": "^15.7.0",
 		"dotenv": "^17.2.3",

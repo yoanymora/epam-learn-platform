@@ -1,9 +1,11 @@
 import { defineConfig } from "cypress";
 import * as dotenv from "dotenv";
+import { plugin as cypressGrepPlugin } from "@cypress/grep/plugin";
 dotenv.config();
 
 export default defineConfig({
 	env: {
+		grepFilterSpecs: true,
 		logInUrl:
 			"https://learn.epam.com/api/signin?redirectUrl=https%3A%2F%2Flearn.epam.com%2Fstart",
 		myAccountUrl: "https://learn.epam.com/account/profile",
@@ -12,7 +14,10 @@ export default defineConfig({
 	},
 	e2e: {
 		specPattern: "cypress/e2e/tests/*.spec.ts",
-		setupNodeEvents(on, config) {},
+		setupNodeEvents(on, config) {
+			cypressGrepPlugin(config);
+			return config;
+		},
 	},
 	retries: {
 		runMode: 2,

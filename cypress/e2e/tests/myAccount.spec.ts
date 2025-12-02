@@ -1,7 +1,7 @@
 import MyAccountPage from "../pageobjects/pages/myAccountPage";
 import MyAccountService from "../pageobjects/services/myAccountService";
 
-describe("My Account", () => {
+describe("My Account", { tags: "@logged" }, () => {
 	before(() => {
 		Cypress.session.clearAllSavedSessions();
 		cy.reload(true);
