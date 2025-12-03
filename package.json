@@ -17,6 +17,7 @@
 		"@cypress/grep": "^5.0.0",
 		"@eslint/js": "^9.39.1",
 		"cypress": "^15.7.0",
+		"cypress-mochawesome-reporter": "^4.0.2",
 		"dotenv": "^17.2.3",
 		"eslint": "^9.39.1",
 		"eslint-plugin-cypress": "^5.2.0",
