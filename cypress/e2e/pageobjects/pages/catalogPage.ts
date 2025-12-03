@@ -2,11 +2,11 @@ import PageFactory from "./pageFactory";
 
 class CatalogPage extends PageFactory {
 	constructor() {
-		super(Cypress.env("catalogUrl"));
+		super(Cypress.env("catalogUrl"), "div.ExplorePage");
 	}
 
 	get catalogBody() {
-		return cy.get("div.ExplorePage");
+		return cy.get(this.distinctiveSelector);
 	}
 
 	get filterPanel() {

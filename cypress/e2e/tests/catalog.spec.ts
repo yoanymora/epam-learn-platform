@@ -1,11 +1,10 @@
 import CatalogPage from "../pageobjects/pages/catalogPage";
+import myAccountPage from "../pageobjects/pages/myAccountPage";
 import CatalogService from "../pageobjects/services/catalogService";
 
 describe("Catalog Page", { tags: "@public" }, () => {
 	before(() => {
-		CatalogPage.visit();
-		cy.url().should("include", Cypress.env("catalogUrl"));
-		CatalogPage.catalogBody.should("be.visible");
+		cy.visitAndWaitForLoad(CatalogPage.url, CatalogPage.distinctiveSelector);
 	});
 
 	it("Filter courses by language", () => {
@@ -17,4 +16,13 @@ describe("Catalog Page", { tags: "@public" }, () => {
 			expect(new Set(coursesLanguages).size).to.be.equal(1);
 		});
 	});
+
+	// it("Get all courses in catalog", () => {
+	// 	cy.intercept('https://learn.epam.com/catalog').as('getMyAccountPage');
+	// 	CatalogPage.visit();
+	// 	// myAccountPage.visit();
+	// 	cy.wait('@getMyAccountPage').then((interception) => {
+	// 		console.log(interception.response)
+	// 	});
+	// });
 });
