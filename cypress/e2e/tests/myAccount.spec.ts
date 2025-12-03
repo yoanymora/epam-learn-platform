@@ -9,7 +9,11 @@ describe("My Account", { tags: "@logged" }, () => {
 	});
 
 	it("A user changes its location", function () {
-		MyAccountPage.visit();
+		cy.intercept("https://learn.epam.com/account/profile").as("getMyAccountPage");
+		cy.visitAndWaitForLoad(MyAccountPage.url, MyAccountPage.distinctiveSelector);
+		cy.wait("@getMyAccountPage").then((interception) => {
+			expect(interception.response).to.have.property("statusCode", 200);
+		});
 		MyAccountService.changeLocationTo("Jalisco");
 		MyAccountPage.currentUserLocation.invoke("text").then((currentLocation) => {
 			expect(currentLocation).to.equal("Jalisco");

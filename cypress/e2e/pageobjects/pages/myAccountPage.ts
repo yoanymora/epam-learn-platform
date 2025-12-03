@@ -2,7 +2,7 @@ import PageFactory from "./pageFactory";
 
 class MyAccountPage extends PageFactory {
 	constructor() {
-		super(Cypress.env("myAccountUrl"));
+		super(Cypress.env("myAccountUrl"), ".MyProfileCard_container__j7XTu");
 	}
 
 	get currentUserLocation() {
@@ -10,15 +10,19 @@ class MyAccountPage extends PageFactory {
 	}
 
 	get userCard() {
-		return cy.get(".MyProfileCard_container__j7XTu");
+		return cy.get(this.distinctiveSelector);
 	}
 
-	get profileDropdown() {
+	get profileDropdownButton() {
 		return cy.get("button.fizvnn.-clickable.AppHeader_action__FbpJW");
 	}
 
+	get profileDropdownBody() {
+		return cy.get(".uui-dropdown-body.UserMenu_userMenu__35qB6");
+	}
+
 	get editLocationModalTrigger() {
-		return cy.get("div > div > div:nth-child(2) > div > div > div.wxehuT > div:nth-child(5)");
+		return this.profileDropdownBody.find('div[role="menuitem"]').first();
 	}
 
 	get locationModalInput() {

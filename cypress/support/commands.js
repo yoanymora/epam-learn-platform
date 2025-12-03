@@ -5,11 +5,17 @@ Cypress.on("uncaught:exception", (err, runnable) => {
 	return false;
 });
 
+Cypress.Commands.add("visitAndWaitForLoad", (url, distinctiveSelector) => {
+	cy.visit(url);
+	cy.get(distinctiveSelector).should("be.visible");
+});
+
 Cypress.Commands.add("logInWithDiscord", () => {
 	cy.session("discordSession", () => {
 		Login.visit();
 		Access.showMoreLink.should("be.visible");
 		Access.showMoreLink.click();
+		cy.get("#social-discord").should("be.visible");
 		cy.get("#social-discord").click();
 		cy.origin("https://discord.com", () => {
 			Cypress.on("uncaught:exception", (err, runnable) => {
@@ -20,12 +26,9 @@ Cypress.Commands.add("logInWithDiscord", () => {
 				.type(Cypress.env("DiscordUserEmail"));
 			cy.get('input[name="password"]').type(Cypress.env("DiscordUserPassword"));
 			cy.get('button[type="submit"]').click();
-			cy.get(
-				"#«rb» > div > div > div.body__8a031.auto_d125d2.scrollerBase_d125d2 > main > div > div > div > div.applicationDetails__94ab2 > div:nth-child(4) > div"
-			).scrollIntoView();
-			cy.get(
-				"#«rb» > div > div > footer > div > div > button.button_a22cb0.md_a22cb0.primary_a22cb0.hasText_a22cb0.fullWidth_a22cb0 > div"
-			).click();
+			cy.get('[data-mana-component="modal"]').should("be.visible");
+			cy.get('[data-mana-component="button"]:nth-child(2)').should("be.visible");
+			cy.get('[data-mana-component="button"]:nth-child(2)').click();
 			cy.url().should("contain", "/start");
 		});
 	});
