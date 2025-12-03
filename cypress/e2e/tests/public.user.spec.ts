@@ -1,8 +1,7 @@
 import CatalogPage from "../pageobjects/pages/catalogPage";
-import myAccountPage from "../pageobjects/pages/myAccountPage";
 import CatalogService from "../pageobjects/services/catalogService";
 
-describe("Catalog Page", { tags: "@public" }, () => {
+describe("Public User Flows", { tags: "@public" }, () => {
 	beforeEach(() => {
 		cy.reload(true);
 		cy.visitAndWaitForLoad(CatalogPage.url, CatalogPage.distinctiveSelector);

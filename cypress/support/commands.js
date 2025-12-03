@@ -1,6 +1,3 @@
-import Login from "../e2e/pageobjects/pages/loginPage";
-import Access from "../e2e/pageobjects/pages/accessPage";
-
 Cypress.on("uncaught:exception", (err, runnable) => {
 	return false;
 });

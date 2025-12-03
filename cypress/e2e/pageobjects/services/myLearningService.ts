@@ -1,0 +1,58 @@
+import MyLearningPage from "../pages/myLearningPage";
+
+class MyLearningService {
+	validateUserHasNoCourses(): void {
+		cy.visitAndWaitForLoad(
+			MyLearningPage.activeLearningUrl,
+			MyLearningPage.activeLearningDisctintiveSelector
+		);
+		MyLearningPage.noActiveLearning.should("be.visible");
+	}
+
+	validateUserEnrolledIntoCourse(title: string): void {
+		cy.visitAndWaitForLoad(
+			MyLearningPage.activeLearningUrl,
+			MyLearningPage.activeLearningDisctintiveSelector
+		);
+		MyLearningPage.activeLearningCourses.should("be.visible");
+		cy.reload();
+		MyLearningPage.activeLearningCourseTitles.should("be.visible");
+		MyLearningPage.activeLearningCourseTitles.contains(title).should("be.visible");
+	}
+
+	fillLeaveLearningModal(reason: string): void {
+		MyLearningPage.leaveLearningModal.should("be.visible");
+		MyLearningPage.leaveLearningModalReasonInput.should("be.visible");
+		MyLearningPage.leaveLearningModalReasonInput.click();
+		MyLearningPage.leaveLearningModalOptions.should("be.visible");
+		MyLearningPage.leaveLearningModalOptions.contains(reason).click();
+		MyLearningPage.leaveLearningModalTextarea.type("Test");
+	}
+
+	findAndClickCourseLeaveLearningButton(title: string): void {
+		MyLearningPage.activeLearningCourseTitles.contains(title).should("be.visible");
+		MyLearningPage.activeLearningCourseTitles
+			.contains(title)
+			.parents(".MyLearningCard_myLearningCardContent__oC2Ma")
+			.find("button.MyLearningCardFooterActions_actionButton__-z5Xo")
+			.should("be.visible");
+		MyLearningPage.activeLearningCourseTitles
+			.contains(title)
+			.parents(".MyLearningCard_myLearningCardContent__oC2Ma")
+			.find("button.MyLearningCardFooterActions_actionButton__-z5Xo")
+			.click();
+	}
+
+	desenrollToCourse(title: string, reason: string): void {
+		cy.visitAndWaitForLoad(
+			MyLearningPage.activeLearningUrl,
+			MyLearningPage.activeLearningDisctintiveSelector
+		);
+		this.findAndClickCourseLeaveLearningButton(title);
+		this.fillLeaveLearningModal(reason);
+		MyLearningPage.leaveLearningModalSubmit.should("be.visible");
+		MyLearningPage.leaveLearningModalSubmit.click();
+	}
+}
+
+export default new MyLearningService();

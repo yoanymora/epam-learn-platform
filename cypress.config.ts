@@ -12,6 +12,8 @@ export default defineConfig({
 		logInUrl: page.logIn,
 		logInWithDiscordUrl: page.logInWithDiscord,
 		myAccountUrl: page.myAccount,
+		myLearningUrl: page.myLearning,
+		myActiveLearningUrl: page.myActiveLearning,
 		DiscordUserEmail: process.env.DISCORD_USER_EMAL,
 		DiscordUserPassword: process.env.DISCORD_USER_PASSWORD,
 	},

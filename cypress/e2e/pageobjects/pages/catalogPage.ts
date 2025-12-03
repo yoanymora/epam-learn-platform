@@ -5,6 +5,10 @@ class CatalogPage extends PageFactory {
 		super(Cypress.env("catalogUrl"), "div.ExplorePage");
 	}
 
+	get searchInput() {
+		return cy.get('input[type="search"]');
+	}
+
 	get catalogBody() {
 		return cy.get(this.distinctiveSelector);
 	}
@@ -39,7 +43,7 @@ class CatalogPage extends PageFactory {
 		);
 	}
 
-	get courseTitle() {
+	get courseTitles() {
 		return this.courseCard.find("div.CatalogCardHeaderBlock_catalogCardHeaderBlock__xOzxc h3");
 	}
 

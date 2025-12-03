@@ -1,8 +1,11 @@
 import CatalogPage from "../pages/catalogPage";
 
 class CatalogService {
-	getCourseByTitle(title: string) {
-		return CatalogPage.courseTitle.contains(title);
+	goToCourseDetails(title: string): void {
+		CatalogPage.searchInput.should("be.visible");
+		CatalogPage.searchInput.type(title);
+		CatalogPage.courseTitles.contains(title).should("be.visible");
+		CatalogPage.courseTitles.contains(title).click();
 	}
 
 	filterCoursesByLanguage(language: string) {
