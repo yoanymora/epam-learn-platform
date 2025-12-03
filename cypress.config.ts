@@ -6,6 +6,7 @@ dotenv.config();
 export default defineConfig({
 	env: {
 		grepFilterSpecs: true,
+		catalogUrl: "https://learn.epam.com/catalog",
 		logInUrl:
 			"https://learn.epam.com/api/signin?redirectUrl=https%3A%2F%2Flearn.epam.com%2Fstart",
 		myAccountUrl: "https://learn.epam.com/account/profile",
@@ -19,8 +20,10 @@ export default defineConfig({
 			return config;
 		},
 	},
+	viewportWidth: 1920,
+	viewportHeight: 1400,
 	retries: {
 		runMode: 2,
-		openMode: 2,
+		openMode: 0,
 	},
 });
