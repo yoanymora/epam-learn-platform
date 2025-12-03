@@ -1,16 +1,17 @@
 import { defineConfig } from "cypress";
 import * as dotenv from "dotenv";
 import { plugin as cypressGrepPlugin } from "@cypress/grep/plugin";
+import { page } from "./epamUrls";
 
 dotenv.config();
 
 export default defineConfig({
 	env: {
 		grepFilterSpecs: true,
-		catalogUrl: "https://learn.epam.com/catalog",
-		logInUrl:
-			"https://learn.epam.com/api/signin?redirectUrl=https%3A%2F%2Flearn.epam.com%2Fstart",
-		myAccountUrl: "https://learn.epam.com/account/profile",
+		catalogUrl: page.catalog,
+		logInUrl: page.logIn,
+		logInWithDiscordUrl: page.logInWithDiscord,
+		myAccountUrl: page.myAccount,
 		DiscordUserEmail: process.env.DISCORD_USER_EMAL,
 		DiscordUserPassword: process.env.DISCORD_USER_PASSWORD,
 	},

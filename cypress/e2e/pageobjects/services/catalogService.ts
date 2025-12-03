@@ -35,7 +35,7 @@ class CatalogService {
 	}
 
 	sortCoursesByVisitors() {
-		cy.fixture("sortCoursesUrls.json").then((fixture) => {
+		cy.fixture("sortUrls.json").then((fixture) => {
 			cy.intercept(fixture.sortByEnrolled).as("sortByEnrolled");
 			cy.visitAndWaitForLoad(fixture.sortByEnrolled, CatalogPage.distinctiveSelector);
 		});

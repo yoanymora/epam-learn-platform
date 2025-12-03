@@ -12,9 +12,7 @@ Cypress.Commands.add("visitAndWaitForLoad", (url, distinctiveSelector) => {
 
 Cypress.Commands.add("logInWithDiscord", () => {
 	cy.session("discordSession", () => {
-		Login.visit();
-		Access.showMoreLink.should("be.visible");
-		Access.showMoreLink.click();
+		cy.visit(Cypress.env("logInWithDiscordUrl"));
 		cy.get("#social-discord").should("be.visible");
 		cy.get("#social-discord").click();
 		cy.origin("https://discord.com", () => {
