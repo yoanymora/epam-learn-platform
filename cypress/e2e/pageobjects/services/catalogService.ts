@@ -2,10 +2,8 @@ import CatalogPage from "../pages/catalogPage";
 
 class CatalogService {
 	goToCourseDetails(title: string) {
-		CatalogPage.searchInput.should("be.visible");
-		CatalogPage.searchInput.type(title);
-		CatalogPage.courseTitles.contains(title).should("be.visible");
-		CatalogPage.courseTitles.contains(title).click();
+		cy.typeOnVisibleElement(CatalogPage.searchInput, title);
+		cy.typeOnVisibleElement(CatalogPage.courseTitles.contains(title));
 	}
 
 	filterCoursesByLanguage(language: string) {

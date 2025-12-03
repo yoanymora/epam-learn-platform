@@ -28,3 +28,13 @@ Cypress.Commands.add("logInWithDiscord", () => {
 		});
 	});
 });
+
+Cypress.Commands.add("clickOnVisibleElement", (element) => {
+	element.should("be.visible");
+	element.click();
+});
+
+Cypress.Commands.add("typeOnVisibleElement", (element, value) => {
+	element.should("be.visible");
+	element.clear().type(value);
+});
