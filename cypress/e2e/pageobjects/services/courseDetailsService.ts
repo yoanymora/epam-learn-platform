@@ -2,8 +2,7 @@ import CourseDetailsPage from "../pages/courseDetailsPage";
 
 class CourseDetailsService {
 	enrollToCourse() {
-		CourseDetailsPage.studyButton.should("be.visible");
-		CourseDetailsPage.studyButton.click();
+		cy.clickOnVisibleElement(CourseDetailsPage.studyButton);
 	}
 }
 

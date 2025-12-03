@@ -11,14 +11,6 @@ describe("Logged User", { tags: "@logged", testIsolation: false }, () => {
 		cy.logInWithDiscord();
 	});
 
-	it("User visits My Account Page", () => {
-		cy.intercept("https://learn.epam.com/account/profile").as("getMyAccountPage");
-		cy.visitAndWaitForLoad(MyAccountPage.url, MyAccountPage.distinctiveSelector);
-		cy.wait("@getMyAccountPage").then((interception) => {
-			expect(interception.response).to.have.property("statusCode", 200);
-		});
-	});
-
 	it("User changes its location", () => {
 		MyAccountService.changeLocationTo("Jalisco");
 		MyAccountPage.currentUserLocation.invoke("text").then((currentLocation) => {
@@ -44,5 +36,13 @@ describe("Logged User", { tags: "@logged", testIsolation: false }, () => {
 	it("Desenroll to course", () => {
 		MyLearningService.desenrollToCourse("Clean Code", "Other");
 		MyLearningService.validateUserHasNoCourses();
+	});
+
+	it("User visits My Account Page", () => {
+		cy.intercept("https://learn.epam.com/account/profile").as("getMyAccountPage");
+		cy.visitAndWaitForLoad(MyAccountPage.url, MyAccountPage.distinctiveSelector);
+		cy.wait("@getMyAccountPage").then((interception) => {
+			expect(interception.response).to.have.property("statusCode", 200);
+		});
 	});
 });

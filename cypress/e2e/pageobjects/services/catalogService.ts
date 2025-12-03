@@ -3,7 +3,7 @@ import CatalogPage from "../pages/catalogPage";
 class CatalogService {
 	goToCourseDetails(title: string) {
 		cy.typeOnVisibleElement(CatalogPage.searchInput, title);
-		cy.typeOnVisibleElement(CatalogPage.courseTitles.contains(title));
+		cy.clickOnVisibleElement(CatalogPage.courseTitles.contains(title));
 	}
 
 	filterCoursesByLanguage(language: string) {

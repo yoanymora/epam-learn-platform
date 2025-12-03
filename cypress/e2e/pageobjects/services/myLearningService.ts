@@ -22,11 +22,10 @@ class MyLearningService {
 
 	fillLeaveLearningModal(reason: string) {
 		MyLearningPage.leaveLearningModal.should("be.visible");
-		MyLearningPage.leaveLearningModalReasonInput.should("be.visible");
-		MyLearningPage.leaveLearningModalReasonInput.click();
+		cy.clickOnVisibleElement(MyLearningPage.leaveLearningModalReasonInput);
 		MyLearningPage.leaveLearningModalOptions.should("be.visible");
 		MyLearningPage.leaveLearningModalOptions.contains(reason).click();
-		MyLearningPage.leaveLearningModalTextarea.type("Test");
+		cy.typeOnVisibleElement(MyLearningPage.leaveLearningModalTextarea, "Test");
 	}
 
 	findAndClickCourseLeaveLearningButton(title: string) {
@@ -50,8 +49,7 @@ class MyLearningService {
 		);
 		this.findAndClickCourseLeaveLearningButton(title);
 		this.fillLeaveLearningModal(reason);
-		MyLearningPage.leaveLearningModalSubmit.should("be.visible");
-		MyLearningPage.leaveLearningModalSubmit.click();
+		cy.clickOnVisibleElement(MyLearningPage.leaveLearningModalSubmit);
 	}
 }
 
