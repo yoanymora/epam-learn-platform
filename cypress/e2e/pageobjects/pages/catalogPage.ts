@@ -46,6 +46,22 @@ class CatalogPage extends PageFactory {
 	get courseArchetype() {
 		return this.courseCard.find('[data-testid="test-archetype-badge"]');
 	}
+
+	get allCoursesVisitorsBadge() {
+		return cy.get('[data-testid="content-visitors"] .OverflowedTypography_content__wo27b');
+	}
+
+	get sortByDropdownButton() {
+		return cy.get('[data-testid="sort-by-menu"] > div > button');
+	}
+
+	get sortByOptions() {
+		return cy.get('div[role="dialog"].uui-popper');
+	}
+
+	get sortByEnrolledButton() {
+		return this.sortByOptions.find("div:contains('Enrolled')");
+	}
 }
 
 export default new CatalogPage();

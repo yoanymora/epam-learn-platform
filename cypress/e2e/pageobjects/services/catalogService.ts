@@ -14,15 +14,34 @@ class CatalogService {
 			.click();
 	}
 
-	/**
-	 * Returns an array of language texts found on course badges.
-	 * Resolves after the selector yields all badge elements and their texts are collected.
-	 */
 	getCoursesLanguage(): Cypress.Chainable<Array<string>> {
 		let languages: Array<string> = [];
 		return CatalogPage.allCoursesLanguageBadge.then(($badges) => {
 			languages = [...$badges].map((badge) => badge.innerText);
 			return languages;
+		});
+	}
+
+	getCoursesVisitors(): Cypress.Chainable<Array<number>> {
+		let visitors: Array<number> = [];
+		return CatalogPage.allCoursesVisitorsBadge.then(($badges) => {
+			visitors = [...$badges].map((badge) => Number(badge.innerText));
+			return visitors;
+		});
+	}
+
+	sortCoursesVisitorsAsc(visitors: Array<number>): Array<number> {
+		return visitors.sort((a, b) => b - a);
+	}
+
+	sortCoursesByVisitors() {
+		cy.fixture("sortCoursesUrls.json").then((fixture) => {
+			cy.intercept(fixture.sortByEnrolled).as("sortByEnrolled");
+			cy.visitAndWaitForLoad(fixture.sortByEnrolled, CatalogPage.distinctiveSelector);
+		});
+		cy.wait("@sortByEnrolled").then((interception) => {
+			expect(interception.request.query["sorting"]).to.include("ENROLLED");
+			expect(interception.response).to.have.property("statusCode", 200);
 		});
 	}
 }

@@ -3,7 +3,8 @@ import myAccountPage from "../pageobjects/pages/myAccountPage";
 import CatalogService from "../pageobjects/services/catalogService";
 
 describe("Catalog Page", { tags: "@public" }, () => {
-	before(() => {
+	beforeEach(() => {
+		cy.reload(true);
 		cy.visitAndWaitForLoad(CatalogPage.url, CatalogPage.distinctiveSelector);
 	});
 
@@ -17,12 +18,17 @@ describe("Catalog Page", { tags: "@public" }, () => {
 		});
 	});
 
-	// it("Get all courses in catalog", () => {
-	// 	cy.intercept('https://learn.epam.com/catalog').as('getMyAccountPage');
-	// 	CatalogPage.visit();
-	// 	// myAccountPage.visit();
-	// 	cy.wait('@getMyAccountPage').then((interception) => {
-	// 		console.log(interception.response)
-	// 	});
-	// });
+	it("Sort courses by enrolled", () => {
+		CatalogService.getCoursesVisitors().then((coursesVisitors) => {
+			const unsortedCorusesVisitors = Array.from(coursesVisitors);
+			CatalogService.sortCoursesVisitorsAsc(coursesVisitors);
+			expect(unsortedCorusesVisitors).not.to.have.ordered.members(coursesVisitors);
+		});
+		CatalogService.sortCoursesByVisitors();
+		CatalogService.getCoursesVisitors().then((coursesVisitors) => {
+			const unsortedCorusesVisitors = Array.from(coursesVisitors);
+			CatalogService.sortCoursesVisitorsAsc(coursesVisitors);
+			expect(unsortedCorusesVisitors).to.have.ordered.members(coursesVisitors);
+		});
+	});
 });
