@@ -1,7 +1,7 @@
 import MyLearningPage from "../pages/myLearningPage";
 
 class MyLearningService {
-	validateUserHasNoCourses(): void {
+	validateUserHasNoCourses() {
 		cy.visitAndWaitForLoad(
 			MyLearningPage.activeLearningUrl,
 			MyLearningPage.activeLearningDisctintiveSelector
@@ -9,7 +9,7 @@ class MyLearningService {
 		MyLearningPage.noActiveLearning.should("be.visible");
 	}
 
-	validateUserEnrolledIntoCourse(title: string): void {
+	validateUserEnrolledIntoCourse(title: string) {
 		cy.visitAndWaitForLoad(
 			MyLearningPage.activeLearningUrl,
 			MyLearningPage.activeLearningDisctintiveSelector
@@ -20,7 +20,7 @@ class MyLearningService {
 		MyLearningPage.activeLearningCourseTitles.contains(title).should("be.visible");
 	}
 
-	fillLeaveLearningModal(reason: string): void {
+	fillLeaveLearningModal(reason: string) {
 		MyLearningPage.leaveLearningModal.should("be.visible");
 		MyLearningPage.leaveLearningModalReasonInput.should("be.visible");
 		MyLearningPage.leaveLearningModalReasonInput.click();
@@ -29,7 +29,7 @@ class MyLearningService {
 		MyLearningPage.leaveLearningModalTextarea.type("Test");
 	}
 
-	findAndClickCourseLeaveLearningButton(title: string): void {
+	findAndClickCourseLeaveLearningButton(title: string) {
 		MyLearningPage.activeLearningCourseTitles.contains(title).should("be.visible");
 		MyLearningPage.activeLearningCourseTitles
 			.contains(title)
@@ -43,7 +43,7 @@ class MyLearningService {
 			.click();
 	}
 
-	desenrollToCourse(title: string, reason: string): void {
+	desenrollToCourse(title: string, reason: string) {
 		cy.visitAndWaitForLoad(
 			MyLearningPage.activeLearningUrl,
 			MyLearningPage.activeLearningDisctintiveSelector

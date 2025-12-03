@@ -9,7 +9,7 @@ export default class PageFactory {
 		this.distinctiveSelector = distinctiveSelector;
 	}
 
-	visit(): void {
+	visit() {
 		cy.visit(this.url);
 	}
 }

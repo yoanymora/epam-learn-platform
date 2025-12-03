@@ -1,9 +1,9 @@
 class Common {
-	waitForVisible(element: Cypress.Chainable<JQuery<HTMLElement>>): void {
+	waitForVisible(element: Cypress.Chainable<JQuery<HTMLElement>>) {
 		element.should("be.visible");
 	}
 
-	fillInput(input: Cypress.Chainable<JQuery<HTMLElement>>, value: string): void {
+	fillInput(input: Cypress.Chainable<JQuery<HTMLElement>>, value: string) {
 		input.clear().type(value);
 	}
 }

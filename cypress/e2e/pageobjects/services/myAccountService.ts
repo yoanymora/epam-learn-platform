@@ -2,7 +2,7 @@ import MyAccountPage from "../pages/myAccountPage";
 import Common from "./common";
 
 class MyAccountService {
-	changeLocationTo(location: string): void {
+	changeLocationTo(location: string) {
 		Common.waitForVisible(MyAccountPage.profileDropdownButton);
 		MyAccountPage.profileDropdownButton.click();
 		Common.waitForVisible(MyAccountPage.profileDropdownBody);

@@ -6,7 +6,7 @@ import CatalogService from "../pageobjects/services/catalogService";
 import CourseDetailsPage from "../pageobjects/pages/courseDetailsPage";
 import CourseDetailsService from "../pageobjects/services/courseDetailsService";
 
-describe("Logged User Flows", { tags: "@logged", testIsolation: false }, () => {
+describe("Logged User", { tags: "@logged", testIsolation: false }, () => {
 	it("User logs in", () => {
 		cy.logInWithDiscord();
 	});

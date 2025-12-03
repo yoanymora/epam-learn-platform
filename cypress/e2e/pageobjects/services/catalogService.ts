@@ -1,7 +1,7 @@
 import CatalogPage from "../pages/catalogPage";
 
 class CatalogService {
-	goToCourseDetails(title: string): void {
+	goToCourseDetails(title: string) {
 		CatalogPage.searchInput.should("be.visible");
 		CatalogPage.searchInput.type(title);
 		CatalogPage.courseTitles.contains(title).should("be.visible");
@@ -17,19 +17,21 @@ class CatalogService {
 			.click();
 	}
 
-	getCoursesLanguage(): Cypress.Chainable<Array<string>> {
-		let languages: Array<string> = [];
-		return CatalogPage.allCoursesLanguageBadge.then(($badges) => {
-			languages = [...$badges].map((badge) => badge.innerText);
-			return languages;
-		});
-	}
-
-	getCoursesVisitors(): Cypress.Chainable<Array<number>> {
-		let visitors: Array<number> = [];
-		return CatalogPage.allCoursesVisitorsBadge.then(($badges) => {
-			visitors = [...$badges].map((badge) => Number(badge.innerText));
-			return visitors;
+	getCoursesBy(
+		badge: "language" | "visitors"
+	): Cypress.Chainable<Array<string>> | Cypress.Chainable<Array<number>> {
+		let elements: Array<any> = [];
+		let selector: any;
+		if (badge === "language") {
+			selector = CatalogPage.allCoursesLanguageBadge;
+		} else {
+			selector = CatalogPage.allCoursesVisitorsBadge;
+		}
+		return selector.then(($badges) => {
+			elements = [...$badges].map((badge) =>
+				badge === "language" ? badge.innerText : Number(badge.innerText)
+			);
+			return elements;
 		});
 	}
 
