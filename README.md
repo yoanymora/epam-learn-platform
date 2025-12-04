@@ -7,6 +7,7 @@ This project pretends to be a practice with Cypress and TypeScript to test the E
 - [Cypress Mochawesome Reporter](https://www.npmjs.com/package/cypress-mochawesome-reporter)
 - [ESLint](https://eslint.org/)
 - [prettier](https://prettier.io/)
+- [Githib Actions](https://docs.github.com/es/actions)
 
 The tests where splitted into Public (@public) and Logged (@logged) user suites. Due to private credentials handling for logged user tests only the public tests are runned within the [Github Action](https://docs.github.com/es/actions/get-started/understand-github-actions) related to this repo.
 
@@ -37,3 +38,7 @@ The tests where splitted into Public (@public) and Logged (@logged) user suites.
 - Fix format errors: `npm run prettier:fix`
 
 **Commiting changes triggers the commands to check for lints and format errors.**
+
+<h3>Github Actions</h3>
+
+This project includes CI through a github action which is triggered after push or pull request to the main branch, also an artifact containing the HTML test report is uploaded too, feel free to download it within the Actions tag of the github project and accessing to the pipeline of the report you wan to see.

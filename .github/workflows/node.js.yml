@@ -1,0 +1,38 @@
+name: Public User Tests
+
+on:
+    push:
+        branches:
+            - main
+    pull_request:
+        branches:
+            - main
+
+jobs:
+    run_ui_tests:
+        runs-on: ubuntu-latest
+        defaults:
+            run:
+                shell: bash
+                working-directory: .
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: "20.x"
+
+            - name: Install dependencies
+              run: npm install
+
+            - name: Run tests for public users with Cypress
+              run: npx cypress run --env grepTags="@public"
+
+            - name: Upload artifact
+              uses: actions/upload-artifact@v4
+              if: always()
+              with:
+                  path: cypress/reports/html
