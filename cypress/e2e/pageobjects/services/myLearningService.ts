@@ -66,7 +66,7 @@ class MyLearningService {
 		leaveCourseButton.click();
 	}
 
-	desenrollToCourse(title: string, reason: string) {
+	disenrollToCourse(title: string, reason: string) {
 		cy.visitAndWaitForLoad(
 			MyLearningPage.activeLearningUrl,
 			MyLearningPage.activeLearningDisctintiveSelector

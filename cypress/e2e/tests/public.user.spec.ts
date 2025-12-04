@@ -20,13 +20,13 @@ describe("Public User", { tags: "@public" }, () => {
 	it("Sort courses by enrolled", () => {
 		CatalogService.getCoursesBy("visitors").then((coursesVisitors) => {
 			const unsortedCorusesVisitors = Array.from(coursesVisitors);
-			CatalogService.sortCoursesVisitorsAsc(coursesVisitors);
+			CatalogService.sortCoursesVisitorsDes(coursesVisitors);
 			expect(unsortedCorusesVisitors).not.to.have.ordered.members(coursesVisitors);
 		});
 		CatalogService.sortCoursesByVisitors();
 		CatalogService.getCoursesBy("visitors").then((coursesVisitors) => {
 			const unsortedCorusesVisitors = Array.from(coursesVisitors);
-			CatalogService.sortCoursesVisitorsAsc(coursesVisitors);
+			CatalogService.sortCoursesVisitorsDes(coursesVisitors);
 			expect(unsortedCorusesVisitors).to.have.ordered.members(coursesVisitors);
 		});
 	});

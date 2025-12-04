@@ -51,8 +51,8 @@ describe("Logged User", { tags: "@logged", testIsolation: false }, () => {
 		MyLearningService.validateUserEnrolledIntoCourse(courseToEnroll, 1);
 	});
 
-	it("Desenroll to course", () => {
-		MyLearningService.desenrollToCourse("Clean Code", "Other");
+	it("Disenroll to course", () => {
+		MyLearningService.disenrollToCourse("Clean Code", "Other");
 		MyLearningService.validateUserHasNoCourses();
 	});
 });

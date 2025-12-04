@@ -37,7 +37,7 @@ class CatalogService {
 		});
 	}
 
-	sortCoursesVisitorsAsc(visitors: Array<number>): Array<number> {
+	sortCoursesVisitorsDes(visitors: Array<number>): Array<number> {
 		return visitors.sort((a, b) => b - a);
 	}
 
