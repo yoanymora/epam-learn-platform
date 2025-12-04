@@ -15,6 +15,18 @@ class CatalogPage extends PageFactory {
 		);
 	}
 
+	get filterModal() {
+		return cy.get('div[aria-modal="true"]');
+	}
+
+	get filterModalSearchInput() {
+		return this.filterModal.find('input[type="search"]');
+	}
+
+	get filterModalOption() {
+		return cy.get('div[role="option"] div');
+	}
+
 	get allCoursesLanguageBadge() {
 		return cy.get('[data-testid="label-language"] .OverflowedTypography_content__wo27b');
 	}

@@ -6,10 +6,17 @@ class CatalogService {
 		cy.clickOnVisibleElement(CatalogPage.courseTitles.contains(title));
 	}
 
+	findLanguageFilters() {
+		return CatalogPage.filterPanel.find("h6:contains('Language')").parents(".uui-label-top");
+	}
+
+	openShowMoreLanguageFilters() {
+		const selector = this.findLanguageFilters().find(".FilterItem_togglerText__cLamo");
+		cy.clickOnVisibleElement(selector);
+	}
+
 	filterCoursesByLanguage(language: string) {
-		CatalogPage.filterPanel
-			.find("h6:contains('Language')")
-			.parents(".uui-label-top")
+		this.findLanguageFilters()
 			.find('div[role="option"] div.uui-input-label')
 			.contains(language)
 			.click();
