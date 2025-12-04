@@ -1,0 +1,10 @@
+{
+	"sortCourses": {
+		"sortByEnrolled": "https://learn.epam.com/catalog?filter=~(isUserContent~false)&search=&sorting=~(~(direction~%27desc~field~%27ENROLLED))&tab=catalog"
+	},
+	"endpoints": {
+		"currentUser": "https://learn.epam.com/api/user/current",
+		"getAppContext": "https://learn.epam.com/api/epamgraphql/query?opName=AppContext",
+		"eLearn": "https://elearn.epam.com"
+	}
+}

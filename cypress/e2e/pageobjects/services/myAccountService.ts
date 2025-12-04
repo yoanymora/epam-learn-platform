@@ -11,9 +11,15 @@ class MyAccountService {
 		MyAccountPage.locationOption.first().should("contain.text", location);
 		MyAccountPage.locationOption.first().click();
 		cy.clickOnVisibleElement(MyAccountPage.selectLocationButton);
-		MyAccountPage.locationModalInput.should("not.exist");
-		MyAccountPage.currentUserLocation.should("not.exist");
-		Common.waitForVisible(MyAccountPage.userCard);
+		cy.fixture("urls.json").then((fixture) => {
+			cy.intercept(fixture.endpoints.currentUser).as("getCurrentUserProfile");
+			MyAccountPage.locationModalInput.should("not.exist");
+			MyAccountPage.currentUserLocation.should("not.exist");
+			Common.waitForVisible(MyAccountPage.userCard);
+			cy.wait("@getCurrentUserProfile").then((interception) => {
+				expect(interception.response?.body?.location).to.equal(location);
+			});
+		});
 	}
 }
 

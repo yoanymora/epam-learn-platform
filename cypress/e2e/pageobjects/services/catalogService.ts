@@ -1,9 +1,13 @@
 import CatalogPage from "../pages/catalogPage";
+import Common from "./common";
 
 class CatalogService {
 	goToCourseDetails(title: string) {
 		cy.typeOnVisibleElement(CatalogPage.searchInput, title);
-		cy.clickOnVisibleElement(CatalogPage.courseTitles.contains(title));
+		Common.waitForVisible(cy.get(".ItemsListWithFilter_sortingListWrapper__VVIE2"));
+		const cleanCodeCourseElement = CatalogPage.courseTitles.contains(title);
+		Common.waitForVisible(cleanCodeCourseElement);
+		cy.clickOnVisibleElement(cleanCodeCourseElement);
 	}
 
 	filterCoursesByLanguage(language: string) {
@@ -38,9 +42,12 @@ class CatalogService {
 	}
 
 	sortCoursesByVisitors() {
-		cy.fixture("sortUrls.json").then((fixture) => {
-			cy.intercept(fixture.sortByEnrolled).as("sortByEnrolled");
-			cy.visitAndWaitForLoad(fixture.sortByEnrolled, CatalogPage.distinctiveSelector);
+		cy.fixture("urls.json").then((fixture) => {
+			cy.intercept(fixture.sortCourses.sortByEnrolled).as("sortByEnrolled");
+			cy.visitAndWaitForLoad(
+				fixture.sortCourses.sortByEnrolled,
+				CatalogPage.distinctiveSelector
+			);
 		});
 		cy.wait("@sortByEnrolled").then((interception) => {
 			expect(interception.request.query["sorting"]).to.include("ENROLLED");

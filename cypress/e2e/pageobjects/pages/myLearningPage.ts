@@ -2,7 +2,10 @@ import PageFactory from "./pageFactory";
 
 class MyLearningPage extends PageFactory {
 	constructor() {
-		super(Cypress.env("myLearningUrl"), ".LearningCabinetVisibleRows_container__k9mLC");
+		super(
+			Cypress.env("myLearningUrl"),
+			".LearningCabinet_page__keQzH .ProfileSummary_statistic__7n5l2"
+		);
 	}
 
 	get learningCabinet() {

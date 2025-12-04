@@ -1,23 +1,51 @@
 import MyLearningPage from "../pages/myLearningPage";
+import Common from "./common";
 
 class MyLearningService {
 	validateUserHasNoCourses() {
+		const learningSummaryEndpoint =
+			"https://learn.epam.com/api/epamgraphql/query?operationName=learningCabinetTotalCountTabs";
+		const continueSummaryEndpoint =
+			"https://learn.epam.com/api/epamgraphql/query?opName=getContinueLearningItemsQuery";
+		cy.intercept(learningSummaryEndpoint).as("getLearningSummary");
+		cy.intercept(continueSummaryEndpoint).as("getContinueLearningSummary");
 		cy.visitAndWaitForLoad(
 			MyLearningPage.activeLearningUrl,
 			MyLearningPage.activeLearningDisctintiveSelector
 		);
-		MyLearningPage.noActiveLearning.should("be.visible");
+		cy.wait("@getLearningSummary").then((interception) => {
+			expect(interception.response?.body?.data?.learningOverview?.totalCount).to.equal(0);
+		});
+		cy.wait("@getContinueLearningSummary").then((interception) => {
+			expect(
+				interception.response?.body?.data?.myLearningRequestItems?.items.length
+			).to.equal(0);
+		});
 	}
 
-	validateUserEnrolledIntoCourse(title: string) {
+	validateUserEnrolledIntoCourse(courseToEnroll, coursesEnrolled: number) {
+		const learningSummaryEndpoint =
+			"https://learn.epam.com/api/epamgraphql/query?operationName=learningCabinetTotalCountTabs";
+		const continueSummaryEndpoint =
+			"https://learn.epam.com/api/epamgraphql/query?opName=getContinueLearningItemsQuery";
+		cy.intercept(learningSummaryEndpoint).as("getLearningSummary");
+		cy.intercept(continueSummaryEndpoint).as("getContinueLearningSummary");
+		cy.visitAndWaitForLoad(MyLearningPage.url, MyLearningPage.distinctiveSelector);
 		cy.visitAndWaitForLoad(
 			MyLearningPage.activeLearningUrl,
 			MyLearningPage.activeLearningDisctintiveSelector
 		);
-		MyLearningPage.activeLearningCourses.should("be.visible");
-		cy.reload();
-		MyLearningPage.activeLearningCourseTitles.should("be.visible");
-		MyLearningPage.activeLearningCourseTitles.contains(title).should("be.visible");
+		cy.wait("@getLearningSummary").then((interception) => {
+			expect(interception.response?.body?.data?.learningOverview?.totalCount).to.equal(
+				coursesEnrolled
+			);
+		});
+		cy.wait("@getContinueLearningSummary").then((interception) => {
+			expect(
+				interception.response?.body?.data?.myLearningRequestItems?.items[0]?.catalogItem
+					?.name
+			).to.equal(courseToEnroll);
+		});
 	}
 
 	fillLeaveLearningModal(reason: string) {
@@ -30,16 +58,12 @@ class MyLearningService {
 
 	findAndClickCourseLeaveLearningButton(title: string) {
 		MyLearningPage.activeLearningCourseTitles.contains(title).should("be.visible");
-		MyLearningPage.activeLearningCourseTitles
+		const leaveCourseButton = MyLearningPage.activeLearningCourseTitles
 			.contains(title)
 			.parents(".MyLearningCard_myLearningCardContent__oC2Ma")
-			.find("button.MyLearningCardFooterActions_actionButton__-z5Xo")
-			.should("be.visible");
-		MyLearningPage.activeLearningCourseTitles
-			.contains(title)
-			.parents(".MyLearningCard_myLearningCardContent__oC2Ma")
-			.find("button.MyLearningCardFooterActions_actionButton__-z5Xo")
-			.click();
+			.find("button.MyLearningCardFooterActions_actionButton__-z5Xo");
+		Common.waitForVisible(leaveCourseButton);
+		leaveCourseButton.click();
 	}
 
 	desenrollToCourse(title: string, reason: string) {

@@ -11,7 +11,25 @@ describe("Logged User", { tags: "@logged", testIsolation: false }, () => {
 		cy.logInWithDiscord();
 	});
 
+	it("Validate user data in My Account page", () => {
+		cy.fixture("urls.json").then((fixture) => {
+			cy.intercept(fixture.endpoints.getAppContext).as("getAppContext");
+			cy.visitAndWaitForLoad(MyAccountPage.url, MyAccountPage.distinctiveSelector);
+			cy.wait("@getAppContext").then((interception) => {
+				expect(interception.response?.body?.data?.appContext?.user).to.have.property(
+					"name",
+					"dummy test"
+				);
+				expect(interception.response?.body?.data?.appContext?.user).to.have.property(
+					"email",
+					"test.dummy.epam@gmail.com"
+				);
+			});
+		});
+	});
+
 	it("User changes its location", () => {
+		cy.visitAndWaitForLoad(MyAccountPage.url, MyAccountPage.distinctiveSelector);
 		MyAccountService.changeLocationTo("Jalisco");
 		MyAccountPage.currentUserLocation.invoke("text").then((currentLocation) => {
 			expect(currentLocation).to.equal("Jalisco");
@@ -30,19 +48,11 @@ describe("Logged User", { tags: "@logged", testIsolation: false }, () => {
 		CatalogService.goToCourseDetails(courseToEnroll);
 		CourseDetailsPage.courseSummary.should("be.visible");
 		CourseDetailsService.enrollToCourse();
-		MyLearningService.validateUserEnrolledIntoCourse(courseToEnroll);
+		MyLearningService.validateUserEnrolledIntoCourse(courseToEnroll, 1);
 	});
 
 	it("Desenroll to course", () => {
 		MyLearningService.desenrollToCourse("Clean Code", "Other");
 		MyLearningService.validateUserHasNoCourses();
-	});
-
-	it("User visits My Account Page", () => {
-		cy.intercept("https://learn.epam.com/account/profile").as("getMyAccountPage");
-		cy.visitAndWaitForLoad(MyAccountPage.url, MyAccountPage.distinctiveSelector);
-		cy.wait("@getMyAccountPage").then((interception) => {
-			expect(interception.response).to.have.property("statusCode", 200);
-		});
 	});
 });
