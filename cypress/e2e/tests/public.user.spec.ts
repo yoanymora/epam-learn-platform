@@ -1,5 +1,5 @@
-import CatalogPage from "../pageobjects/pages/catalogPage";
-import CatalogService from "../pageobjects/services/catalogService";
+import CatalogPage from "../../pages/catalogPage";
+import CatalogService from "../../actions/catalogService";
 
 describe("Public User", { tags: "@public" }, () => {
 	beforeEach(() => {
