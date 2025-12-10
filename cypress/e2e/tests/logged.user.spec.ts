@@ -1,10 +1,10 @@
-import MyAccountPage from "../pageobjects/pages/myAccountPage";
-import MyAccountService from "../pageobjects/services/myAccountService";
-import MyLearningService from "../pageobjects/services/myLearningService";
-import CatalogPage from "../pageobjects/pages/catalogPage";
-import CatalogService from "../pageobjects/services/catalogService";
-import CourseDetailsPage from "../pageobjects/pages/courseDetailsPage";
-import CourseDetailsService from "../pageobjects/services/courseDetailsService";
+import MyAccountPage from "../../pages/myAccountPage";
+import MyAccountService from "../../actions/myAccountService";
+import MyLearningService from "../../actions/myLearningService";
+import CatalogPage from "../../pages/catalogPage";
+import CatalogService from "../../actions/catalogService";
+import CourseDetailsPage from "../../pages/courseDetailsPage";
+import CourseDetailsService from "../../actions/courseDetailsService";
 
 describe("Logged User", { tags: "@logged", testIsolation: false }, () => {
 	it("User logs in", () => {
