@@ -18,7 +18,7 @@ export default defineConfig({
 		DiscordUserPassword: process.env.DISCORD_USER_PASSWORD,
 	},
 	e2e: {
-		supportFile: "cypress/support/e2e.js",
+		supportFile: "cypress/support/e2e.ts",
 		specPattern: "cypress/e2e/tests/*.spec.ts",
 		setupNodeEvents(on, config) {
 			cypressGrepPlugin(config);
