@@ -2,7 +2,6 @@ import MyAccountPage from "../../pages/myAccountPage";
 import MyAccountService from "../../actions/myAccountService";
 import MyLearningService from "../../actions/myLearningService";
 import CatalogPage from "../../pages/catalogPage";
-import CatalogService from "../../actions/catalogService";
 import CourseDetailsPage from "../../pages/courseDetailsPage";
 import CourseDetailsService from "../../actions/courseDetailsService";
 
@@ -45,7 +44,7 @@ describe("Logged User", { tags: "@logged", testIsolation: false }, () => {
 		const courseToEnroll = "Clean Code";
 		MyLearningService.validateUserHasNoCourses();
 		cy.visitAndWaitForLoad(CatalogPage.url, CatalogPage.distinctiveSelector);
-		CatalogService.goToCourseDetails(courseToEnroll);
+		cy.goToCourseDetails(courseToEnroll);
 		CourseDetailsPage.courseSummary.should("be.visible");
 		CourseDetailsService.enrollToCourse();
 		MyLearningService.validateUserEnrolledIntoCourse(courseToEnroll, 1);
