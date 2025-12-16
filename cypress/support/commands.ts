@@ -1,6 +1,30 @@
-Cypress.on("uncaught:exception", (err, runnable) => {
-	return false;
-});
+export {};
+
+declare global {
+	namespace Cypress {
+		interface Chainable {
+			sortCoursesVisitorsDes(visitors: any): Chainable<any>;
+			goToCourseDetails(title: string): Chainable<any>;
+			filterCoursesByLanguage(language: string): Chainable<any>;
+			getCoursesBy(badge: "language" | "visitors"): Chainable<any>;
+			sortCoursesByVisitors();
+			logInWithDiscord();
+			visitAndWaitForLoad(url, distinctiveSelector): Chainable<any>;
+			clickOnVisibleElement(element): Chainable<any>;
+			typeOnVisibleElement(element, value: string): Chainable<any>;
+			changeLocationTo(location: string): Chainable<any>;
+			enrollToCourse(): Chainable<any>;
+			validateUserHasNoCourses(): Chainable<any>;
+			validateUserEnrolledIntoCourse(
+				courseToEnroll: string,
+				coursesEnrolled: string
+			): Chainable<any>;
+			fillLeaveLearningModal(reason: string): Chainable<any>;
+			findAndClickCourseLeaveLearningButton(title: string): Chainable<any>;
+			disenrollToCourse(title: string, reason: string): Chainable<any>;
+		}
+	}
+}
 
 Cypress.Commands.add("visitAndWaitForLoad", (url, distinctiveSelector) => {
 	cy.visit(url);

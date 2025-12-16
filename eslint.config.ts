@@ -17,7 +17,8 @@ export default defineConfig([
 			"no-var": "error",
 			"@typescript-eslint/no-unused-vars": "off",
 			"@typescript-eslint/no-explicit-any": "off",
-			"no-console": "error",
+			"@typescript-eslint/no-namespace": "off",
+			"no-console": "warn",
 		},
 	},
 ]);

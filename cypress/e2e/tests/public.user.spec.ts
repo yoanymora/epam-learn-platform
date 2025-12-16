@@ -1,5 +1,4 @@
-import CatalogPage from "../pageobjects/pages/catalogPage";
-import CatalogService from "../pageobjects/services/catalogService";
+import CatalogPage from "../../pages/catalogPage";
 
 describe("Public User", { tags: "@public" }, () => {
 	beforeEach(() => {
@@ -8,26 +7,29 @@ describe("Public User", { tags: "@public" }, () => {
 	});
 
 	it("Filter courses by language", () => {
-		CatalogService.getCoursesBy("language").then((coursesLanguages) => {
+		cy.getCoursesBy("language").then((coursesLanguages) => {
 			expect(new Set(coursesLanguages).size).to.be.greaterThan(0);
 		});
-		CatalogService.filterCoursesByLanguage("English");
-		CatalogService.getCoursesBy("language").then((coursesLanguages) => {
+		cy.filterCoursesByLanguage("English");
+		cy.getCoursesBy("language").then((coursesLanguages) => {
 			expect(new Set(coursesLanguages).size).to.be.equal(1);
 		});
 	});
 
 	it("Sort courses by enrolled", () => {
-		CatalogService.getCoursesBy("visitors").then((coursesVisitors) => {
+		cy.getCoursesBy("visitors").then((coursesVisitors) => {
 			const unsortedCorusesVisitors = Array.from(coursesVisitors);
-			CatalogService.sortCoursesVisitorsDes(coursesVisitors);
-			expect(unsortedCorusesVisitors).not.to.have.ordered.members(coursesVisitors);
+			cy.sortCoursesVisitorsDes(coursesVisitors).then(() => {
+				expect(unsortedCorusesVisitors).not.to.have.ordered.members(coursesVisitors);
+			});
 		});
-		CatalogService.sortCoursesByVisitors();
-		CatalogService.getCoursesBy("visitors").then((coursesVisitors) => {
-			const unsortedCorusesVisitors = Array.from(coursesVisitors);
-			CatalogService.sortCoursesVisitorsDes(coursesVisitors);
-			expect(unsortedCorusesVisitors).to.have.ordered.members(coursesVisitors);
+		cy.sortCoursesByVisitors().then(() => {
+			cy.getCoursesBy("visitors").then((coursesVisitors) => {
+				const unsortedCorusesVisitors = Array.from(coursesVisitors);
+				cy.sortCoursesVisitorsDes(coursesVisitors).then(() => {
+					expect(unsortedCorusesVisitors).to.have.ordered.members(coursesVisitors);
+				});
+			});
 		});
 	});
 });
