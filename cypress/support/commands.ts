@@ -1,20 +1,30 @@
-import CatalogPage from "../pages/catalogPage";
-import Common from "../actions/common";
+export {};
 
-declare namespace Cypress {
-	interface Chainable<Subject = any> {
-		sortCoursesVisitorsDes: (visitors: any) => Chainable<Subject>;
-		goToCourseDetails(title: string): Chainable<void>;
-		filterCoursesByLanguage(language: string): Chainable<void>;
-		getCoursesBy(badge: "language" | "visitors"): Chainable<void>;
-		sortCoursesByVisitors();
-		logInWithDiscord();
+declare global {
+	namespace Cypress {
+		interface Chainable {
+			sortCoursesVisitorsDes(visitors: any): Chainable<any>;
+			goToCourseDetails(title: string): Chainable<any>;
+			filterCoursesByLanguage(language: string): Chainable<any>;
+			getCoursesBy(badge: "language" | "visitors"): Chainable<any>;
+			sortCoursesByVisitors();
+			logInWithDiscord();
+			visitAndWaitForLoad(url, distinctiveSelector): Chainable<any>;
+			clickOnVisibleElement(element): Chainable<any>;
+			typeOnVisibleElement(element, value: string): Chainable<any>;
+			changeLocationTo(location: string): Chainable<any>;
+			enrollToCourse(): Chainable<any>;
+			validateUserHasNoCourses(): Chainable<any>;
+			validateUserEnrolledIntoCourse(
+				courseToEnroll: string,
+				coursesEnrolled: string
+			): Chainable<any>;
+			fillLeaveLearningModal(reason: string): Chainable<any>;
+			findAndClickCourseLeaveLearningButton(title: string): Chainable<any>;
+			disenrollToCourse(title: string, reason: string): Chainable<any>;
+		}
 	}
 }
-
-Cypress.on("uncaught:exception", (err, runnable) => {
-	return false;
-});
 
 Cypress.Commands.add("visitAndWaitForLoad", (url, distinctiveSelector) => {
 	cy.visit(url);
@@ -43,14 +53,6 @@ Cypress.Commands.add("logInWithDiscord", () => {
 	});
 });
 
-Cypress.Commands.add("sortCoursesVisitorsDes", (visitors) => {
-	console.log("sorting...");
-	return visitors.sort((a, b) => {
-		console.log("iteration");
-		return b - a;
-	});
-});
-
 Cypress.Commands.add("clickOnVisibleElement", (element) => {
 	element.should("be.visible");
 	element.click();
@@ -59,56 +61,4 @@ Cypress.Commands.add("clickOnVisibleElement", (element) => {
 Cypress.Commands.add("typeOnVisibleElement", (element, value) => {
 	element.should("be.visible");
 	element.clear().type(value);
-});
-
-Cypress.Commands.add("goToCourseDetails", (title) => {
-	cy.typeOnVisibleElement(CatalogPage.searchInput, title);
-	Common.waitForVisible(cy.get(".ItemsListWithFilter_sortingListWrapper__VVIE2"));
-	const cleanCodeCourseElement = CatalogPage.courseTitles.contains(title);
-	Common.waitForVisible(cleanCodeCourseElement);
-	cy.clickOnVisibleElement(cleanCodeCourseElement);
-});
-
-Cypress.Commands.add("filterCoursesByLanguage", (language) => {
-	CatalogPage.filterPanel
-		.find("h6:contains('Language')")
-		.parents(".uui-label-top")
-		.find('div[role="option"] div.uui-input-label')
-		.contains(language)
-		.click();
-});
-
-Cypress.Commands.add("getCoursesBy", (badge) => {
-	let elements: Array<any> = [];
-	let selector: any;
-	if (badge === "language") {
-		selector = CatalogPage.allCoursesLanguageBadge;
-	} else {
-		selector = CatalogPage.allCoursesVisitorsBadge;
-	}
-	return selector.then(($badges) => {
-		elements = [...$badges].map((badge) =>
-			badge === "language" ? badge.innerText : Number(badge.innerText)
-		);
-		return elements;
-	});
-});
-
-Cypress.Commands.add("sortCoursesVisitorsDes", (visitors) => {
-	console.log("sorting...");
-	return visitors.sort((a, b) => {
-		console.log("iteration");
-		return b - a;
-	});
-});
-
-Cypress.Commands.add("sortCoursesByVisitors", () => {
-	cy.fixture("urls.json").then((fixture) => {
-		cy.intercept(fixture.sortCourses.sortByEnrolled).as("sortByEnrolled");
-		cy.visitAndWaitForLoad(fixture.sortCourses.sortByEnrolled, CatalogPage.distinctiveSelector);
-	});
-	cy.wait("@sortByEnrolled").then((interception) => {
-		expect(interception.request.query["sorting"]).to.include("ENROLLED");
-		expect(interception.response).to.have.property("statusCode", 200);
-	});
 });
