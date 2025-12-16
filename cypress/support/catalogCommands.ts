@@ -1,11 +1,7 @@
 import CatalogPage from "../pages/catalogPage";
 
 Cypress.Commands.add("sortCoursesVisitorsDes", (visitors) => {
-	console.log("sorting...");
-	return visitors.sort((a, b) => {
-		console.log("iteration");
-		return b - a;
-	});
+	return visitors.sort((a, b) => b - a);
 });
 
 Cypress.Commands.add("goToCourseDetails", (title) => {
@@ -41,14 +37,6 @@ Cypress.Commands.add("getCoursesBy", (badge) => {
 			badge === "language" ? badge.innerText : Number(badge.innerText)
 		);
 		return elements;
-	});
-});
-
-Cypress.Commands.add("sortCoursesVisitorsDes", (visitors) => {
-	console.log("sorting...");
-	return visitors.sort((a, b) => {
-		console.log("iteration");
-		return b - a;
 	});
 });
 
