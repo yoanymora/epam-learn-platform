@@ -3,11 +3,14 @@
 This project pretends to be a practice with Cypress and TypeScript to test the EPAM's Learn Plataform. The list of main tools used are:
 
 - [Cypress](https://docs.cypress.io/)
+- [BDD with Cucumber](https://cucumber.io/docs/cucumber/) and [Gherkin](https://cucumber.io/docs/gherkin/)
 - [TypeScript](https://www.typescriptlang.org/)
 - [Cypress Mochawesome Reporter](https://www.npmjs.com/package/cypress-mochawesome-reporter)
 - [ESLint](https://eslint.org/)
 - [prettier](https://prettier.io/)
 - [Githib Actions](https://docs.github.com/es/actions)
+
+**There are two branches to run this tests**, the first one is **master** which holds the tests in spec files, the second one is **cypress-bdd** which holds just the public user tests using BDD testing.
 
 The tests where splitted into Public (@public) and Logged (@logged) user suites. Due to private credentials handling for logged user tests only the public tests are runned within the [Github Action](https://docs.github.com/es/actions/get-started/understand-github-actions) related to this repo.
 
